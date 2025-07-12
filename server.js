@@ -1,4 +1,4 @@
-require('dotenv').config(); // For local testing only - safe to keep
+
 const express = require('express');
 const admin = require('firebase-admin');
 const cors = require('cors');

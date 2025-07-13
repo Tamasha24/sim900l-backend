@@ -1,16 +1,17 @@
-
 const express = require('express');
 const admin = require('firebase-admin');
 const cors = require('cors');
 
 // Initialize Express
 const app = express();
+
 // ===== ADD THE LOGGING MIDDLEWARE HERE =====
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   next();
 });
 // ===========================================
+
 app.use(express.json());
 app.use(cors());
 
@@ -95,6 +96,12 @@ app.post('/sim900l-data', async (req, res) => {
     console.error("Database error:", error);
     res.status(500).json({ error: "Failed to save data" });
   }
+});
+
+// Block GET requests to /sim900l-data
+app.get('/sim900l-data', (req, res) => {
+  console.log("Invalid GET request received");
+  res.status(405).send("Only POST requests accepted");
 });
 
 // Health check endpoint
